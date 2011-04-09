@@ -11,7 +11,7 @@ supports:
 * Creating a new game
 * Viewing all "available" games, i.e. games you can join
 * Viewing all "active" games, i.e. games people are playing, but have not been completed
-* Viewing all payers
+* Viewing all players
 * Joining a game
 * Canceling a game
 * Game result updating
