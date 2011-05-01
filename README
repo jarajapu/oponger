@@ -78,6 +78,10 @@ you can work with the project through IntelliJ.
 ** If asked for the Google App Engine SDK, under OSX that should be in
     /Applications/GoogleAppEngineLauncher.app/Contents/Resources/GoogleAppEngine-default.bundle/Contents/Resources/google_appengine
 
+Backing up production data
+--------------------------
+Using Google App Engine's bulk data loader, the following script downloads all data into a timestamped CSV file:
+    bin/download_data.sh
 
 Testing
 -------
