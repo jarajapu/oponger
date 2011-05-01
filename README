@@ -25,6 +25,8 @@ supports:
 Planned features
 ----------------
 * Ability to "challenge" another player
+* Batch rank calculations
+* Add RPI (Rating Percentage Index) ranking system as an alternative to ELO
 
 Live app URLs
 -------------
