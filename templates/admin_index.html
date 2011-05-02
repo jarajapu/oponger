@@ -11,12 +11,36 @@ with new properties.
 </form>
 </p>
 
-<h3>Recalculate Rankings</h3>
+<h3>Calculate ELO Rankings</h3>
 <p>
   Resets all player rankings to 1500, then runs through all of the games in the order they were completed
   , updating the rankings for each game.
-<form action="/admin/calculate_rankings" method="get">
-    <input type="submit" class="s" value="Recalculate Rankings" />
+<form action="/admin/calculate_elo_rankings" method="get">
+    <input type="submit" class="s" value="Calculate ELO Rankings" />
 </form>
+</p>
+<h3>Calculate RPI Rankings</h3>
+<p>
+   Calculates rankings based on the RPI method. <strong>THIS WILL TAKE A COUPLE OF MINUTES TO RUN.</strong>
+</p>
+<p>
+    The equation is:
+</p>
+<code>RPI = (WP * 0.25) + (OWP * 0.50) + (OOWP * 0.25)</code>
+<p>
+    Where
+    <ul>
+        <li>WP = Win Percentage</li>
+        <li>OWP = Opponents' Win Percentage</li>
+        <li>OOWP = Opponents' Opponents' Win Percentage</li>
+    </ul>
+</p>
+<p>
+    See http://en.wikipedia.org/wiki/Ratings_Percentage_Index
+</p>
+<p>
+    <form action="/admin/calculate_rpi_rankings" method="get">
+        <input type="submit" class="s" value="Calculate RPI Rankings" />
+    </form>
 </p>
 {% endblock %}

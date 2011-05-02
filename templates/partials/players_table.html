@@ -1,7 +1,8 @@
 <table width="100%">
     <tr>
         <th width="15%"> </th>
-        <th width="15%">Rank</th>
+        <th width="15%">ELO Rank</th>
+        <th width="15%">RPI Rank</th>
         <th width="55%">Player</th>
         <th width="15%">Office</th>
     </tr>
@@ -9,6 +10,7 @@
     <tr class="player">
         <td>{% gravatar_img_for_email player.user.email %}</td>
         <td>{{ player.rank|floatformat:"0" }}</td>
+        <td>{{ player.rpi_rank|floatformat:"0" }}</td>
         <td><a href="/player/{{player.key.name}}">{{ player.pseudonym }}</a></td>
         {% for location in locations %}
             {% ifequal location.geoPt.lat player.location.lat %}

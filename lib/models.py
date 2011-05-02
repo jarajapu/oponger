@@ -16,9 +16,19 @@ class Player(db.Model):
   pseudonym = db.StringProperty()
   location = db.GeoPtProperty(default=DC['geoPt'])
   rank = db.FloatProperty(default=INITIAL_RANK)
+  rpi_rank = db.FloatProperty()
 
   def __str__(self):
     return "[Psuedonym: %s, Nickname: %s]" % (self.pseudonym, self.user.nickname())
+
+  def __eq__(self, value):
+    if self.__class__ == value.__class__:
+      return self.key() == value.key()
+    else:
+      return False
+
+  def __hash__(self):
+    return hash(str(self.key()))
 
   def games(self):
     """Returns this player's games, sorted by creation date."""

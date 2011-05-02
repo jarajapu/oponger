@@ -7,13 +7,14 @@ from google.appengine.ext import webapp
 from google.appengine.ext.webapp.util import run_wsgi_app
 
 
-from lib.admin_handlers import MainPage, UpdateSchema, CalculateRankings
+from lib.admin_handlers import MainPage, UpdateSchema, CalculateELORankings, CalculateRPIRankings
 
 
 application = webapp.WSGIApplication(
   [('/admin/', MainPage),
    ('/admin/update_schema', UpdateSchema),
-   ('/admin/calculate_rankings', CalculateRankings)],
+   ('/admin/calculate_elo_rankings', CalculateELORankings),
+   ('/admin/calculate_rpi_rankings', CalculateRPIRankings)],
   debug=True)
 
 def main():

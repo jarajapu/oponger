@@ -2,6 +2,7 @@ import logging
 from lib.base_handler import BaseHandler
 from lib.models import Player, Game
 import elo
+import rpi
 
 
 class MainPage(BaseHandler):
@@ -21,10 +22,10 @@ class UpdateSchema(BaseHandler):
 
     self.render_to_response("update_schema.html")
 
-class CalculateRankings(BaseHandler):
+class CalculateELORankings(BaseHandler):
   def DoGet(self):
 
-    logging.info('Calculating rankings')
+    logging.info('Calculating ELO rankings')
     # Reset ranks
     for player in Player.all():
       player.rank = elo.INITIAL_RANK
@@ -37,5 +38,13 @@ class CalculateRankings(BaseHandler):
       game.player_1.put()
       game.player_2.put()
 
-    self.render_to_response("calculate_rankings.html")
+    self.render_to_response("calculate_elo_rankings.html")
+
+class CalculateRPIRankings(BaseHandler):
+  def DoGet(self):
+
+    logging.info('Calculating RPI rankings')
+    calculator = rpi.RPI_Calculator()
+    calculator.calculate_rankings()
+    self.render_to_response("calculate_rpi_rankings.html")
 
