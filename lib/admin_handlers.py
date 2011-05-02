@@ -39,6 +39,8 @@ class UpdateWinnersFromOldSchema(BaseHandler):
 
 class CalculateRankings(BaseHandler):
   def DoGet(self):
+
+    logging.info('Calculating rankings')
     # Reset ranks
     for player in Player.all():
       player.rank = elo.INITIAL_RANK
@@ -46,10 +48,10 @@ class CalculateRankings(BaseHandler):
 
     # Calculate ranks for games in ascending order, since the order matters for ELO
     for game in Game.all_completed_asc():
+      logging.info('Updating rankings based on game completed at %s:  %s' % (game.completed_date, game))
       elo.update_ranks(game)
       game.player_1.put()
       game.player_2.put()
-      game.put()
 
     self.render_to_response("calculate_rankings.html")
 
