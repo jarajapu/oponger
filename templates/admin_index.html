@@ -1,4 +1,22 @@
 {% extends "admin_base.html" %}
 {% block content %}
 <p>Administrator main page. Used to do strange things.</p>
+
+<h3>Update Schema</h3>
+<p>Run through all entities, load them and store them. This is the way you update older entities in th Google Data Store
+with new properties.
+
+<form action="/admin/update_schema" method="get">
+    <input type="submit" class="s" value="Update Schema" />
+</form>
+</p>
+
+<h3>Recalculate Rankings</h3>
+<p>
+  Resets all player rankings to 1500, then runs through all of the games in the order they were completed
+  , updating the rankings for each game.
+<form action="/admin/calculate_rankings" method="get">
+    <input type="submit" class="s" value="Recalculate Rankings" />
+</form>
+</p>
 {% endblock %}

@@ -29,11 +29,13 @@ http://docs.djangoproject.com/en/dev/topics/templates/#template-inheritance
         <div id="main" class="grid_8 prefix_4">
 
             <ul class="navigation" class="clearfix">
+                {% block navigation %}
                 <li><a href="/">Home</a></li>
                 <li><a href="/rulez">Rulez</a></li>
                 <li><a href="/games">Games</a></li>
                 <li><a href="/players">Players</a></li>
                 <li><a href="/profile">Profile</a></li>
+                {% endblock %}
             </ul>
 
             <div id="content">
