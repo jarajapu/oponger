@@ -21,12 +21,13 @@ supports:
 * Ranking
 * Admin site with a couple of features
 * Email when someone joins your game
+* Batch rank calculations
+* ELO Ranking System
+* RPI (Rating Percentage Index) ranking system as an alternative to ELO
 
 Planned features
 ----------------
 * Ability to "challenge" another player
-* Batch rank calculations
-* Add RPI (Rating Percentage Index) ranking system as an alternative to ELO
 
 Live app URLs
 -------------
