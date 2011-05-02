@@ -20,7 +20,7 @@ class MainPage(BaseHandler):
     additional_values = {
       'active_games': Game.gql("WHERE player_2 != NULL AND completed_date = NULL"),
       'available_games': Game.gql("WHERE player_2 = NULL"),
-      'players' : Player.all_by_rank().fetch(5,0), # just the top players
+      'players' : self.get_players().fetch(7,0), # just the top players
       'completed_games' : Game.all_completed().fetch(5,0) # just a few recently completed games
     }
 
@@ -68,7 +68,7 @@ class Players(BaseHandler):
   def DoGet(self):
 
     additional_values = {
-      'players'   : Player.all_by_rank(),
+      'players'   : self.get_players()
     }
 
     self.template_values.update(additional_values)

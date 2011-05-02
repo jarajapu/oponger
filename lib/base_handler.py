@@ -42,6 +42,7 @@ class BaseHandler(webapp.RequestHandler):
     # Used for all forms on a page, to specify where to redirect back after form submission
     # see redirect_to_redirect_path_or_home
     self.template_values['redirect_path'] = self.request.path
+    self.template_values['current_path'] = self.request.path
     try:
       self.template_values['is_admin'] = self.request._environ['USER_IS_ADMIN']
     except:
@@ -71,3 +72,17 @@ class BaseHandler(webapp.RequestHandler):
     path = os.path.join(PATH_TO_TEMPLATES, template_name)
     logging.debug("Rendering template_values %s to template %s." % (self.template_values, template_name))
     self.response.out.write(template.render(path, self.template_values))
+
+
+  def get_players(self):
+    """
+    Returns all players by specified or default ordering.
+    """
+    order = self.request.get('order_by')
+    # Default to ELO ordering
+    if not order:
+      order = 'elo'
+
+    return Player.all_by_rank(order)
+
+

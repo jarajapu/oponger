@@ -47,8 +47,21 @@ class Player(db.Model):
     return sorted(completed_games, key = lambda game: game.completed_date, reverse=True)
 
   @staticmethod
-  def all_by_rank():
+  def all_by_elo_rank():
     return Player.gql("ORDER BY rank DESC")
+
+  @staticmethod
+  def all_by_rpi_rank():
+    return Player.gql("ORDER BY rpi_rank DESC")
+
+  @staticmethod
+  def all_by_rank(type):
+    if type == 'elo':
+      return Player.all_by_elo_rank()
+    elif type == 'rpi':
+      return Player.all_by_rpi_rank()
+    else:
+      raise 'No such rank type %s' % type
 
 class Game(db.Model):
   created_date = db.DateTimeProperty(auto_now_add=True)
