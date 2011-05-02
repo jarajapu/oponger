@@ -1,0 +1,4 @@
+cron:
+- description: daily summary job
+  url: /admin/calculate_rpi_rankings
+  schedule: every 24 hours
