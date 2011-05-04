@@ -5,10 +5,10 @@
 {% block content %}
 
 
-  <h2>{{ player_to_show.pseudonym }}</h2>
+<h2>{{ player_to_show.pseudonym }}</h2>
 
 
-  <table width="100%">
+<table width="100%">
     <tr>
         <td width="30%"><strong>Pseudonym</strong></td>
         <td width="50%">{{ player_to_show.pseudonym }}</td>
@@ -21,17 +21,21 @@
         <td>{{ player_to_show.user.nickname }}</td>
     </tr>
 
-      {% for location in locations %}
-        {% ifequal location.geoPt.lat player_to_show.location.lat %}
+    {% for location in locations %}
+    {% ifequal location.geoPt.lat player_to_show.location.lat %}
     <tr>
         <td><strong>Location</strong></td>
         <td>{{location.name}}</td>
     </tr>
-        {% endifequal %}
-      {% endfor %}
+    {% endifequal %}
+    {% endfor %}
     <tr>
-        <td><strong>Rank</strong></td>
+        <td><strong>ELO Rank</strong></td>
         <td>{{ player_to_show.rank|floatformat:"0"  }}</td>
+    </tr>
+    <tr>
+        <td><strong>RPI Rank</strong></td>
+        <td>{{ player_to_show.rpi_rank|floatformat:"0"  }}</td>
     </tr>
     <tr>
         <td><strong>Percent Win</strong></td>
@@ -41,10 +45,10 @@
         <td><strong>Wins - Losses</strong></td>
         <td>{{ stats.wins }} - {{ stats.losses }}</td>
     </tr>
-  </table>
+</table>
 
-  {% include "partials/active_games.html" %}
-  {% include "partials/available_games.html" %}
-  {% include "partials/completed_games.html" %}
+{% include "partials/active_games.html" %}
+{% include "partials/available_games.html" %}
+{% include "partials/completed_games.html" %}
 {% endblock %}
 
