@@ -10,6 +10,17 @@ from elo import INITIAL_RANK
 
 MAX_RESULTS=1000
 
+
+class League(db.Model):
+  name = db.StringProperty()
+  rules = db.StringProperty()
+  logo = db.StringProperty()
+
+  def players(self):
+    """Returns players for this league"""
+    players = db.ReferenceProperty(Player)
+    return sorted(players, key = user)
+
 class Player(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)
   user = db.UserProperty(required=True)
@@ -17,6 +28,7 @@ class Player(db.Model):
   location = db.GeoPtProperty(default=DC['geoPt'])
   rank = db.FloatProperty(default=INITIAL_RANK)
   rpi_rank = db.FloatProperty()
+  league = db.ReferenceProperty(League)
 
   def __str__(self):
     return "[Psuedonym: %s, Nickname: %s]" % (self.pseudonym, self.user.nickname())
