@@ -59,12 +59,14 @@ class NewLeague(BaseHandler):
 class LeagueDetails(BaseHandler):
   def DoGet(self, league_key_name):
     league_to_show = League.get_by_id(long(league_key_name))
+    league_name    = league_to_show.name
+    logging.debug('Getting league %s' % league_to_show)
 
     self.user = users.get_current_user()
     # Creates a player if one does not already exist. No signup required!
     self.player = Player.get_or_insert(self.user.user_id(), user = self.user, pseudonym = self.user.nickname(), league = league_to_show)
+    logging.info('creating player for user %s in league %s' % (self.player.pseudonym, league_name))
 
-    logging.info('Getting league %s' % league_to_show)
     if not league_to_show:
       self.error(404)
       self.response.out.write("""<strong>No League with key %s.
