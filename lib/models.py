@@ -24,7 +24,8 @@ class League(db.Model):
 
   @staticmethod
   def all_active():
-    return League.gql("WHERE rules !=  NULL")
+    #return League.gql("WHERE rules !=  NULL")
+    return League.all()
 
 class Player(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)
