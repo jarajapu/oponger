@@ -7,6 +7,7 @@ from cgi import escape
 from datetime import datetime
 
 from google.appengine.ext.db import GeoPt
+from google.appengine.api import users
 from elo import update_ranks
 
 from models import Player, Game, League
@@ -20,7 +21,7 @@ class MainPage(BaseHandler):
     additional_values = {
         'active_leagues': League.all_active().fetch(5,0) #just the first 5 leagues
     }
-    
+
     self.template_values.update(additional_values)
     self.render_to_response("index.html")
 
@@ -58,6 +59,10 @@ class NewLeague(BaseHandler):
 class LeagueDetails(BaseHandler):
   def DoGet(self, league_key_name):
     league_to_show = League.get_by_id(long(league_key_name))
+
+    self.user = users.get_current_user()
+    # Creates a player if one does not already exist. No signup required!
+    self.player = Player.get_or_insert(self.user.user_id(), user = self.user, pseudonym = self.user.nickname(), league = league_to_show)
 
     logging.info('Getting league %s' % league_to_show)
     if not league_to_show:
@@ -108,6 +113,7 @@ class PlayerDetails(BaseHandler):
 
 class Profile(BaseHandler):
   def DoGet(self):
+
     self.render_to_response("profile.html")
 
 class Players(BaseHandler):
