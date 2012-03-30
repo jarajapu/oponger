@@ -4,21 +4,15 @@
 
 {% block content %}
 
-<h2>Game on!</h2>
+<h2>League on!</h2>
 
   {% if player.pseudonym %}
   {% else %}
-  <p class="greeting">Hi {{ user.nickname }}. Looks like you haven't set up your pseudonym. Head to the <a href="/profile">profile</a> page to get set up!</p>
+  <p class="greeting">Hi {{ user.nickname }}. Looks like you haven't set up your pseudonym for this league. Head to the <a href="/profile">profile</a> page to get set up!</p>
   {% endif %}
 
-  <p>OPing, OPong, baby. Get your paddle ready, because OPOWER's ping pong league is back!</p>
+  <p>OPing, OPong, pOol, Odarts baby. Get your paddle/cue/dart ready, because OPOWER's league is on!</p>
 
-  <h3>Leader Board</h3>
-  {% include "partials/players_table.html" %}
+  {% include "partials/leagues.html" %}
 
-  <p><a href="/players">View all players.</a></p>
-
-  <h3 class="no-border">Recently Completed Games</h3>
-  {% include "partials/completed_games.html" %}
-  <p><a href="/games">View all games.</a></p>
 {% endblock %}

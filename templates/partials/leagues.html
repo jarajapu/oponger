@@ -1,0 +1,18 @@
+{% block content %}
+
+  <h2>Leagues</h2>
+
+    {% if active_leagues %}
+        {% for league in active_leagues %}
+            <li class="clearfix">
+                <div class="title">
+                    <a href="/league/{{league.key}}">{{ league.name}}</a>
+                </div>
+            </li>
+        {% endfor %}
+    {% endif %}
+
+  {% include "partials/new_league.html" %}
+
+
+{% endblock %}

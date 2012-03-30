@@ -6,10 +6,12 @@ from google.appengine.ext.webapp.util import run_wsgi_app
 from lib.page_handlers import MainPage,\
   UpdateProfile,\
   NewGame,\
+  NewLeague,\
   Rulez,\
   Players,\
   Games,\
   PlayerDetails,\
+  LeagueDetails,\
   Profile,\
   JoinGame,\
   CancelGame,\
@@ -17,6 +19,8 @@ from lib.page_handlers import MainPage,\
 
 application = webapp.WSGIApplication(
   [('/', MainPage),
+  ('/league/new', NewLeague),
+  (r'/league/(?P<league_key_name>\w+)', LeagueDetails),
   ('/profile', Profile),
   ('/profile/update', UpdateProfile),
   ('/rulez', Rulez),

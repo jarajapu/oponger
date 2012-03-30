@@ -9,12 +9,22 @@ from datetime import datetime
 from google.appengine.ext.db import GeoPt
 from elo import update_ranks
 
-from models import Player, Game
+from models import Player, Game, League
 from base_handler import BaseHandler
 from stats import stats
 from oponger_email import send_email
 
 class MainPage(BaseHandler):
+  def DoGet(self):
+
+    additional_values = {
+        'active_leagues': League.all_active().fetch(5,0) #just the first 5 leagues
+    }
+    
+    self.template_values.update(additional_values)
+    self.render_to_response("index.html")
+
+class LeaguePage(BaseHandler):
   def DoGet(self):
 
     additional_values = {
@@ -25,7 +35,43 @@ class MainPage(BaseHandler):
     }
 
     self.template_values.update(additional_values)
-    self.render_to_response("index.html")
+    self.render_to_response("league.html")
+
+class NewLeague(BaseHandler):
+  def DoPost(self):
+    league_name = escape(self.request.get('name'))
+    if len(league_name) > 15:
+      raise Exception("A league name can be no more thn 15 characters long.")
+    league_rules = escape(self.request.get('rules'))
+    if len(league_rules) > 700:
+      raise Exception("A league rulebook can be no more than 700 characters long,\
+                       ideally with link to another page on the interwebz.")
+    league_logo = escape(self.request.get('logo'))
+    if len(league_logo) > 150:
+      raise Exception("A league logo is a uri to an icon, no more than 150 characters long.")
+    league = League(name = league_name, rules = league_rules, logo = league_logo)
+    league.put()
+    logging.info("Creating new league %s" % (league))
+    self.redirect('/')
+    #self.redirect_to_redirect_path_or_home()
+
+class LeagueDetails(BaseHandler):
+  def DoGet(self, league_key_name):
+    league_to_show = League.get_by_key_name(league_key_name)
+
+    logging.info('Getting league %s' % league_to_show)
+    if not league_to_show:
+      self.error(404)
+      self.response.out.write("""<strong>No League with key %s.
+      Try looking through the <a href="/">list of leagues</a>.</strong>""" % league_name)
+
+    additional_values = {
+      'league_to_show'  : league_to_show,
+      'players' : league_to_show.players(),
+    }
+
+    self.template_values.update(additional_values)
+    self.render_to_response("league.html")
 
 class Games(BaseHandler):
   def DoGet(self):

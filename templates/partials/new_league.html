@@ -1,0 +1,21 @@
+<h3>New League</h3>
+<form action="/league/new" method="post">
+  <input type="hidden" name="redirect_path" value="{{redirect_path}}" />
+  <div>
+  <label for="name">Name</label>
+  <input type="text" name="name" class="t" value="{{ league.name }}" />
+  </div>
+  <div>&nbsp;</div>
+  <div>
+  <label for="Rules">Rules</label>
+  <textarea name="rules" class="t" rows="10" cols="70" value="{{ league.rules}}" >
+     Insert rules here.
+  </textarea>
+  </div>
+  <div>&nbsp;</div>
+  <div>
+  <label for="Logo">Logo&nbsp;</label>
+  <input type="text" name="logo" class="t" value="{{ league.logo}}" />
+  <input type="submit" class="s" value="New League" />
+  </div>
+</form>

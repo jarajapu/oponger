@@ -13,13 +13,18 @@ MAX_RESULTS=1000
 
 class League(db.Model):
   name = db.StringProperty()
-  rules = db.StringProperty()
+  rules = db.TextProperty()
   logo = db.StringProperty()
 
   def players(self):
     """Returns players for this league"""
-    players = db.ReferenceProperty(Player)
-    return sorted(players, key = user)
+    players = self.player_set.order("rpi_rank").fetch(MAX_RESULTS, 0)
+    #return sorted(players, key = lambda player: player.rpi_rank)
+    return players
+
+  @staticmethod
+  def all_active():
+    return League.gql("WHERE rules !=  NULL")
 
 class Player(db.Model):
   date = db.DateTimeProperty(auto_now_add=True)

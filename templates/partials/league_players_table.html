@@ -1,0 +1,32 @@
+<table width="100%">
+    <tr>
+        <th width="15%"> </th>
+        <th width="15%">
+            <a href="{{current_path}}?order_by=elo">
+                ELO Rank
+            </a>
+            <sup><a href="/rulez">?</a></sup>
+        </th>
+        <th width="15%">
+            <a href="{{current_path}}?order_by=rpi">
+                RPI Rank
+            </a>
+            <sup><a href="/rulez">?</a></sup>
+        </th>
+        <th width="55%">Player</th>
+        <th width="15%">Office</th>
+    </tr>
+    {% for player in players %}
+    <tr class="player">
+        <td>{% gravatar_img_for_email player.user.email %}</td>
+        <td>{{ player.rank|floatformat:"0" }}</td>
+        <td>{{ player.rpi_rank|floatformat:"0" }}</td>
+        <td><a href="/player/{{player.key.name}}">{{ player.pseudonym }}</a></td>
+        {% for location in locations %}
+            {% ifequal location.geoPt.lat player.location.lat %}
+            <td>{{ location.name }}</td>
+            {% endifequal %}
+        {% endfor %}
+    </tr>
+    {% endfor %}
+</table>
