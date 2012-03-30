@@ -6,7 +6,7 @@
         {% for league in active_leagues %}
             <li class="clearfix">
                 <div class="title">
-                    <a href="/league/{{league.key}}">{{ league.name}}</a>
+                    <a href="/league/{{league.key.id}}">{{ league.name}}</a>
                 </div>
             </li>
         {% endfor %}

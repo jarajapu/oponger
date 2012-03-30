@@ -65,3 +65,8 @@ indexes:
   - name: player_2
   - name: created_date
     direction: desc
+
+- kind: Player
+  properties:
+  - name: league
+  - name: rpi_rank

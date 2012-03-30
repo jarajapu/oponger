@@ -57,7 +57,7 @@ class NewLeague(BaseHandler):
 
 class LeagueDetails(BaseHandler):
   def DoGet(self, league_key_name):
-    league_to_show = League.get_by_key_name(league_key_name)
+    league_to_show = League.get_by_id(long(league_key_name))
 
     logging.info('Getting league %s' % league_to_show)
     if not league_to_show:
