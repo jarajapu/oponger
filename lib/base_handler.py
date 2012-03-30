@@ -11,7 +11,7 @@ from google.appengine.ext.webapp import template
 from google.appengine.api import users
 from google.appengine.api.users import create_logout_url
 
-from models import Player
+from models import Player, League
 from locations import LOCATIONS
 
 
@@ -28,9 +28,16 @@ class BaseHandler(webapp.RequestHandler):
   """
   def __init__(self):
     self.user = users.get_current_user()
+    # Creates a player for user in universal league if he does not already exist.
+    league_universal = League.get_by_id(1)    #league#1 is universal
+    self.player = Player.get_or_insert(self.user.user_id(), \
+                                       user = self.user, \
+                                       pseudonym = self.user.nickname(),\
+                                       league = league_universal)
     self.template_values = {
           'user'          : self.user,
-          #'player'        : self.player,
+          'player'        : self.player,
+          'league'        : league_universal, #make every user a player in league#1
           'logout_url'    : create_logout_url('/'),
           'locations'     : LOCATIONS,
         }

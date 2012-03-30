@@ -45,12 +45,14 @@ class NewLeague(BaseHandler):
       raise Exception("A league name can be no more thn 15 characters long.")
     league_rules = escape(self.request.get('rules'))
     if len(league_rules) > 700:
-      raise Exception("A league rulebook can be no more than 700 characters long,\
-                       ideally with link to another page on the interwebz.")
+      raise Exception("A league rulebook can be no more than 700 characters\
+                      long,ideally with link to a page on the interwebz.")
     league_logo = escape(self.request.get('logo'))
     if len(league_logo) > 150:
-      raise Exception("A league logo is a uri to an icon, no more than 150 characters long.")
-    league = League(name = league_name, rules = league_rules, logo = league_logo)
+      raise Exception("A league logo is a uri to an icon, no more than 150\
+                       characters long.")
+    league = League(name = league_name, rules = league_rules, \
+                    logo = league_logo)
     league.put()
     logging.info("Creating new league %s" % (league))
     self.redirect('/')
@@ -63,9 +65,13 @@ class LeagueDetails(BaseHandler):
     logging.debug('Getting league %s' % league_to_show)
 
     self.user = users.get_current_user()
-    # Creates a player if one does not already exist. No signup required!
-    self.player = Player.get_or_insert(self.user.user_id(), user = self.user, pseudonym = self.user.nickname(), league = league_to_show)
-    logging.info('creating player for user %s in league %s' % (self.player.pseudonym, league_name))
+    # Creates a player for user in this league if he does not already exist.
+    self.player = Player.get_or_insert(self.user.user_id(), \
+                                       user = self.user, \
+                                       pseudonym = self.user.nickname(),\
+                                       league = league_to_show)
+    logging.info('creating player for user %s in league %s'\
+                  % (self.player.pseudonym, league_name))
 
     if not league_to_show:
       self.error(404)

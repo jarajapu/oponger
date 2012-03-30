@@ -4,6 +4,7 @@ All of our data models go here.
 For details on how Google App Engine handles these, see:
 http://code.google.com/appengine/docs/python/datastore/modelclass.html
 """
+import logging
 from google.appengine.ext import db
 from locations import DC
 from elo import INITIAL_RANK
@@ -19,12 +20,14 @@ class League(db.Model):
   def players(self):
     """Returns players for this league"""
     players = self.player_set.order("rpi_rank").fetch(MAX_RESULTS, 0)
-    #return sorted(players, key = lambda player: player.rpi_rank)
-    return players
+    #players = self.player_set.fetch(MAX_RESULTS,0)
+    logging.debug("Pulling player list %s" % (players))
+    return sorted(players, key = lambda player: player.rpi_rank)
+    #return players
 
   @staticmethod
   def all_active():
-    #return League.gql("WHERE rules !=  NULL")
+    #return League.gql("WHERE name != 'universal'")
     return League.all()
 
 class Player(db.Model):
